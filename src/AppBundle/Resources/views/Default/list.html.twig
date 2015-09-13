@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>{{ project.name }}</h1>
+    <hr/>
+    {% for c in contents %}
+        {% if c.image is not null %}
+            <img src="{{ asset('img/projects/' ~ c.project.id ~ '/'~c.image.path) }}" class="img-responsive" style="margin-bottom:15px;max-height:100%"/>
+        {% else %}
+            {{ c.video.code | raw }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

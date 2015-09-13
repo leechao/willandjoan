@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h2>Mes projets</h2>
+    <a class="btn btn-primary" href="{{ path('add_project') }}">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        Créer un nouveau projet
+        <span class="glyphicon glyphicon-picture"></span>
+    </a>
+<br/>
+<br/>
+    {% if projects is empty %}
+        <div class="alert alert-info">Pas de projet ajouté</div>
+    {% else %}
+        <table class="table table-hovered">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Couverture</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in projects %}
+                    <tr>
+                        <td style="white-space: nowrap">
+                            <a href="{{ path('view_project', {"id": p.id}) }}">
+                                {{ p.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if p.contents is not empty %}
+                                <img src="{{ asset('img/projects/' ~ p.id ~ '/'~  p.contents.first.image.path ) }}" style="width:20%"/>
+                            {% else %}
+                                Aucun contenu
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-xs" href="{{ path('remove_project', {"id": p.id}) }}">
+                                <span class="glyphicon glyphicon-trash"></span> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

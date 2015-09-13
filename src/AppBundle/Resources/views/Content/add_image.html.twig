@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="col-md-12">
+        <h3>Ajout d'une photo</h3>
+        <form action="" method="POST" {{ form_enctype(form) }} >
+            {{ form_widget(form) }}
+            <br/>
+            <button class="btn btn-default" type="submit">Ajouter</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('list_project') }}"><< Retour</a>
+    <h2>{{ project.name }}</h2>
+    <a class="btn btn-primary" href="{{ path('add_photo', {"id_project" : project.id}) }}">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        Ajouter une photo {% if contents is empty %}de couverture{% endif %}
+        <span class="glyphicon glyphicon-picture"></span>
+    </a>
+    {% if contents is not empty %}
+        <a class="btn btn-default" href="{{ path('add_video', {"id_project" : project.id}) }}">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            Ajouter une vidéo
+            <span class="glyphicon glyphicon-film"></span>
+        </a>
+    {% endif %}
+<br/>
+<br/>
+    {% if contents is empty %}
+        <div class="alert alert-info">Pas encore de photos, ni vidéos dans ce projet</div>
+    {% else %}
+        <table class="table table-hovered">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th class="text-center">Info</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in contents %}
+                    <tr>
+                        <td>
+                            {% if c.image is not null %}
+                                <img src="{{ asset('img/projects/' ~ c.project.id ~ '/'~c.image.path) }}" style="width:20%"/>
+                            {% else %}
+                                Vidéo
+                                {{ c.video.code | raw }}
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if c.order == 1 %}
+                               En couverture
+                            {% else %}
+                            {#{{ c.order }}#}
+                            {% endif %}
+                        </td>
+                        <td><a class="btn btn-default btn-xs" href="{{ path('remove_content', {"id_project" : c.project.id, "id_content" : c.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

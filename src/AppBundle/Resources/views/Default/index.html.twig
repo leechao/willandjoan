@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% for p in projects %}
+        <a href="{{ path('view_album', { 'id' : p.id }) }}">
+            <div class="col-md-3 col-sm-4 project-block">
+                <div class="blog-bg">
+                    {{ p.name }}
+                </div>
+                <img src="{{ asset('img/projects/' ~ p.id ~ '/'~  p.contents.first.image.path ) }}" class="img-responsive" style="max-height:100%;max-width: 100%;"/>
+            </div>
+        </a>
+    {% endfor %}
+
+    <script type="text/javascript">
+        $(function(){
+           $('.project-block').hover(
+               function(){
+                $(this).children('.blog-bg').fadeIn();
+           }, function(){
+               $(this).children('.blog-bg').hide();
+           });
+        });
+    </script>
+{% endblock %}
